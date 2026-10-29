@@ -1,0 +1,136 @@
+# Agent de Collecte — Veille Technologique & Stratégique
+
+**Auteur :** Hamza — Personne 1  
+**Rôle :** Construire le module qui récupère les données technologiques  
+**Technologies :** Python · LangGraph · BeautifulSoup · Requests · feedparser
+
+---
+
+## Structure des fichiers
+
+```text
+collector/
+├── collector.py
+├── requirements.txt
+├── .env.example
+├── .gitignore
+├── README.md
+├── data/
+└── logs/
+```
+
+---
+
+## Installation et lancement
+
+### Étape 1 — Ouvrir un terminal dans le dossier du projet
+
+```bash
+cd chemin/vers/collector
+```
+
+### Étape 2 — Créer l'environnement virtuel
+
+```bash
+python -m venv venv
+```
+
+### Étape 3 — Activer l'environnement
+
+```bash
+# Windows
+venv\Scripts\activate
+
+# Mac / Linux
+source venv/bin/activate
+```
+
+### Étape 4 — Installer les bibliothèques
+
+```bash
+pip install -r requirements.txt
+```
+
+### Étape 5 — Configurer les clés API
+
+```bash
+copy .env.example .env
+```
+
+> GitHub et HuggingFace sont optionnels.  
+> Hacker News fonctionne sans clé API.
+
+### Étape 6 — Lancer la collecte
+
+```bash
+python collector.py
+```
+
+---
+
+## Obtenir les clés API (gratuites)
+
+| Clé | Où la créer |
+|-----|-------------|
+| `GITHUB_TOKEN` | https://github.com/settings/tokens |
+| `HF_TOKEN` | https://huggingface.co/settings/tokens |
+| Hacker News API | https://github.com/HackerNews/API |
+
+---
+
+## Sources surveillées
+
+| Source | Type | Méthode |
+|--------|------|---------|
+| HuggingFace Blog | Blog IA | RSS |
+| OpenAI Blog | Blog IA | RSS |
+| Google DeepMind Blog | Blog IA | RSS |
+| Meta AI Blog | Blog IA | RSS |
+| MIT Tech Review AI | Presse tech | RSS |
+| ArXiv cs.AI | Papiers | RSS |
+| ArXiv cs.LG | Papiers | RSS |
+| Towards Data Science | Blog IA | RSS |
+| The Gradient | Blog IA | RSS |
+| AI Alignment Forum | Blog IA | RSS |
+| GitHub Trending Python | Code | BeautifulSoup |
+| GitHub Trending Jupyter | Code | BeautifulSoup |
+| Hacker News Top Stories | Communauté tech | API officielle |
+| HuggingFace Hub | Modèles | API officielle |
+| HuggingFace Daily Papers | Papiers | API officielle |
+
+---
+
+## Format du dataset produit
+
+| Champ | Description |
+|-------|-------------|
+| `source` | Nom de la source |
+| `type` | `article` · `repo` · `tech_news` · `model` · `paper` |
+| `title` | Titre |
+| `url` | Lien direct |
+| `summary` | Résumé |
+| `published` | Date ISO 8601 |
+| `collected_at` | Horodatage UTC |
+
+---
+
+## Intégration LangGraph
+
+```python
+from collector import collector_node, CollectorState
+
+graph.add_node("collector", collector_node)
+```
+
+Le `CollectorState` contient :
+
+```text
+articles
+repos
+models
+papers
+hackernews_posts
+analysis_result
+knowledge_base
+report
+```
